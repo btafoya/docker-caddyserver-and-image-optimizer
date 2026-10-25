@@ -1,0 +1,12 @@
+{
+	order image_optimizer before file_server
+}
+
+:80 {
+	root * /srv
+	image_optimizer {
+		widths 320 640 960 1280
+		qualities 40-90
+	}
+	file_server
+}

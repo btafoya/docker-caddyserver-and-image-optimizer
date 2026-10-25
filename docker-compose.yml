@@ -1,0 +1,18 @@
+services:
+  caddy:
+    build: .
+    image: ghcr.io/btafoya/caddy-image-optimizer:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./site:/srv:ro
+      - caddy_data:/data   # includes optimizer cache
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
