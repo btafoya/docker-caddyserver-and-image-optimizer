@@ -52,7 +52,26 @@ The bundled `Caddyfile` is a working example:
 }
 ```
 
-`image_optimizer` must run before `file_server`. For all options (`presets`, `limits`, `cache_max_size`, `on_fail`, ...) see the [module README](https://github.com/btafoya/caddy-image-optimizer).
+`image_optimizer` must run before `file_server`.
+
+### Limit to certain paths
+
+Use a Caddy matcher. Requests that don't match are served untouched by `file_server`.
+
+```
+:80 {
+	root * /srv
+	@opt path /home-images/* /gallery/*
+	image_optimizer @opt {
+		widths 320 640
+	}
+	file_server
+}
+```
+
+For different settings per path, use one matcher and one `image_optimizer` block per path.
+
+For all options (`presets`, `limits`, `cache_max_size`, `on_fail`, ...) see the [module README](https://github.com/btafoya/caddy-image-optimizer).
 
 ## Volumes
 
